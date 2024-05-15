@@ -18,7 +18,6 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   plugins: [],
   rules: {
-    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
   },
