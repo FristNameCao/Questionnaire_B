@@ -7,22 +7,19 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended"
+    "plugin:prettier/recommended",
   ],
   settings: {
     react: {
-      version: "detect",
+      version: 'detect',
     },
   },
-  ignorePatterns: ["dist", ".eslintrc.cjs"],
+  ignorePatterns: ["dist", ".eslintrc.js"],
   parser: "@typescript-eslint/parser",
-  plugins: ["react-refresh"],
+  plugins: [],
   rules: {
+    '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^React$' }],
     "react/react-in-jsx-scope": "off",
     "react/jsx-uses-react": "off",
-    "react-refresh/only-export-components": [
-      "warn",
-      { allowConstantExport: true },
-    ],
   },
 };
