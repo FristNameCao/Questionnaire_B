@@ -6,7 +6,6 @@
   background-color: #FFFFFF;
   &:hover {
     cursor: pointer;
-    transition: box-shadow 0.2s ease-in-out 0.2s; /* 2秒延迟 */
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   }
 }

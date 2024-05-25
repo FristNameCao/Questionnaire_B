@@ -1,9 +1,10 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "antd";
 import { MANAGE_INDEX_PATHNAME } from "../router";
 import styled from "./Home.module.scss";
-
+import axios from "axios";
+// import "../_mock/index";
 const Home: FC = () => {
   // 第三方 hook
   const nav = useNavigate();
@@ -23,6 +24,18 @@ const Home: FC = () => {
   //     <Link to="/register">注册</Link>
   //   </div>
   // );
+
+  useEffect(() => {
+    fetch("/api/test")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+      });
+    // mock.js 只能劫持 XMLHttpRequest,不能劫持 fetch
+    axios.get("/api/question/100").then((res) => {
+      console.log(res.data);
+    });
+  }, []);
   return (
     <div className={styled.container}>
       <div className={styled.info}>
