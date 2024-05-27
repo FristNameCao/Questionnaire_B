@@ -6,50 +6,23 @@ import { Button, Empty, Modal, Space, Table, Tag, message } from "antd";
 import { useTitle } from "ahooks";
 import { produce } from "immer";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import { QuestionList } from "../../types/list";
 
 const Trash: FC = () => {
   useTitle("回收站");
 
   const { confirm } = Modal;
 
-  const [questionList, seQuestionList] = useState([
-    {
-      _id: 1,
-      title: "问卷1",
-      isPublished: true,
-      isStart: true,
-      date: "5月10日13:23",
-      answerCount: 5,
-    },
-    {
-      _id: 2,
-      title: "问卷2",
-      isPublished: false,
-      isStart: false,
-      date: "5月11日13:23",
-      answerCount: 6,
-    },
-    {
-      _id: 3,
-      title: "问卷3",
-      isPublished: true,
-      isStart: true,
-      date: "5月12日13:23",
-      answerCount: 2,
-    },
-    {
-      _id: 4,
-      title: "问卷4",
-      isPublished: false,
-      isStart: false,
-      date: "5月13日13:23",
-      answerCount: 4,
-    },
-  ]);
+  const [questionList, seQuestionList] = useState<QuestionList[]>([]);
 
-  const [selectedIds, setSelectedRowKeys] = useState<number[]>([]);
+  const { data, loading } = useLoadQuestionListData({ isDeleted: true });
 
-  function handleDelete(id: number | number[]) {
+  const { total = 0 } = data || {};
+
+  const [selectedIds, setSelectedRowKeys] = useState<string[]>([]);
+
+  function handleDelete(id: string | string[]) {
     confirm({
       title: "确认删除该问卷？",
       icon: <ExclamationCircleOutlined />,
@@ -76,8 +49,8 @@ const Trash: FC = () => {
   }
 
   useEffect(() => {
-    console.log(Array.isArray(selectedIds));
-  }, [selectedIds]);
+    seQuestionList(data?.list || []);
+  }, [data]);
 
   const tableCoulumn = [
     {
@@ -109,7 +82,7 @@ const Trash: FC = () => {
     {
       title: "操作",
       key: "action",
-      render: ({ _id }: { _id: number }) => {
+      render: ({ _id }: { _id: string }) => {
         return (
           <>
             <Space>
@@ -139,6 +112,7 @@ const Trash: FC = () => {
         </Space>
       </div>
       <Table
+        loading={loading}
         columns={tableCoulumn}
         dataSource={questionList}
         pagination={false}
@@ -146,7 +120,7 @@ const Trash: FC = () => {
         rowSelection={{
           type: "checkbox",
           onChange: (selectedRowKeys) => {
-            setSelectedRowKeys(selectedRowKeys as number[]);
+            setSelectedRowKeys(selectedRowKeys as string[]);
           },
         }}
       />
@@ -157,12 +131,13 @@ const Trash: FC = () => {
     <div>
       <Header title="回收站" />
       <div className={styled.content}>
-        {questionList.length === 0 ? (
+        {!loading && questionList.length === 0 ? (
           <Empty description={"暂无数据"} />
         ) : (
           TableElement
         )}
       </div>
+      <div>{total}</div>
     </div>
   );
 };

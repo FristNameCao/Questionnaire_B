@@ -10,13 +10,13 @@ import {
 } from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 interface QuestionsCard {
-  _id: number;
+  _id: string;
   title: string;
   isPublished: boolean;
-  date?: string;
+  createAt?: string;
   isStart: boolean;
-  handleDelete?: (_id: number) => void;
-  handlePublish?: (_id: number) => void;
+  handleDelete?: (_id: string) => void;
+  handlePublish?: (_id: string) => void;
 }
 
 const QuestionsCard: FC<QuestionsCard> = (props) => {
@@ -28,11 +28,11 @@ const QuestionsCard: FC<QuestionsCard> = (props) => {
     isPublished,
     handleDelete = () => {},
     // handlePublish,
-    date,
+    createAt,
     isStart,
   } = props;
 
-  function detele(_id: number) {
+  function detele(_id: string) {
     confirm({
       title: "是否删除问卷",
       content: "是否删除问卷",
@@ -74,7 +74,7 @@ const QuestionsCard: FC<QuestionsCard> = (props) => {
                 </>
               )}
               <span>{"答卷:" + _id}</span>
-              <span>{date}</span>
+              <span>{createAt}</span>
             </Space>
           </div>
         </div>

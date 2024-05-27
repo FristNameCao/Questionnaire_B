@@ -13,7 +13,7 @@ const ListSearch: FC = () => {
 
   //   写完了确定或者回车
   function handleSearch(value: string) {
-    if (!search) return;
+    if (!value) return;
     nav({
       pathname,
       search: `?${LIST_SEARCH_PARAM_KEY}=${value}`,

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import styled from "./ManageLayout.module.scss";
 import { Button, Divider, Space, message } from "antd";
@@ -9,21 +9,39 @@ import {
   StarOutlined,
 } from "@ant-design/icons";
 import { createQuestionService } from "../services/question";
+import { useRequest } from "ahooks";
 const ManageLayout: FC = () => {
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // nav跳转
   const nav = useNavigate();
+  // 根据url判断高亮效果
   const { pathname } = useLocation();
 
-  async function handleCreaterClick() {
-    setLoading(true);
-    const data = await createQuestionService();
-    const { id } = data;
-    if (id) {
-      nav(`/question/edit/${id}`);
-      message.success("创建成功");
-    }
-    setLoading(false);
-  }
+  // async function handleCreaterClick() {
+  //   setLoading(true);
+  //   const data = await createQuestionService();
+  //   const { id } = data;
+  //   if (id) {
+  //     nav(`/question/edit/${id}`);
+  //     message.success("创建成功");
+  //   }
+  //   setLoading(false);
+  // }
+
+  const { loading, run: handleCreaterClick } = useRequest(
+    createQuestionService,
+    {
+      manual: true,
+      onSuccess(data) {
+        const { id } = data;
+        if (id) {
+          nav(`/question/edit/${id}`);
+          message.success("创建成功");
+        }
+      },
+    },
+  );
+
   return (
     <div className={styled.container}>
       <div className={styled.left}>

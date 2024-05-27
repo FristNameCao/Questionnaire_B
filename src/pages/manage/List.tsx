@@ -1,50 +1,28 @@
-import { FC, useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { FC, useEffect, useState } from "react";
 import { produce } from "immer";
 import QuestionsCard from "../../components/QuestionsCard";
-import { useSearchParams } from "react-router-dom";
 import { useTitle } from "ahooks";
 import styled from "./common.module.scss";
-// import { Typography } from "antd";
 import Header from "./components/Header";
+import { QuestionList } from "../../types/list";
+import { Spin } from "antd";
+import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 const List: FC = () => {
-  // const { Title } = Typography;
-  const [searchParmas] = useSearchParams();
-  console.log(searchParmas.get("name"));
   useTitle("我的问卷");
-  const [questionList, seQuestionList] = useState([
-    {
-      _id: 1,
-      title: "问卷1",
-      isPublished: true,
-      isStart: true,
-      date: "5月10日13:23",
-    },
-    {
-      _id: 2,
-      title: "问卷2",
-      isPublished: false,
-      isStart: false,
-      date: "5月11日13:23",
-    },
-    {
-      _id: 3,
-      title: "问卷3",
-      isPublished: true,
-      isStart: true,
-      date: "5月12日13:23",
-    },
-    {
-      _id: 4,
-      title: "问卷4",
-      isPublished: false,
-      isStart: false,
-      date: "5月13日13:23",
-    },
-  ]);
-  // 组件是一个函数（执行返回JSX片段），组件初次渲染执行这个函数
-  // 任何stete更新，都会吃法组建的更新（重新执行函数）
+  const [questionList, seQuestionList] = useState<QuestionList[]>([]);
 
-  function handleDelete(_id: number) {
+  const { data, loading } = useLoadQuestionListData();
+
+  const { total = 0 } = data || {};
+
+  // 组件是一个函数（执行返回JSX片段），组件初次渲染执行这个函数
+  // 任何stete更新，都会执行组建的更新（重新执行函数）
+  useEffect(() => {
+    seQuestionList(data?.list || []);
+  }, [data]);
+
+  function handleDelete(_id: string) {
     // const newQuestionList = questionList.filter((item) => item._id !== _id);
     // seQuestionList(newQuestionList);
 
@@ -71,17 +49,19 @@ const List: FC = () => {
     seQuestionList(
       produce((draft) => {
         draft.push({
-          _id: Date.now(),
+          _id: Date.now().toString(),
           title: "问卷" + Date.now(),
           isPublished: false,
           isStart: false,
-          date: "5月20日13:14",
+          createAt: "5月20日13:14",
+          answerCount: 0,
+          isDeleted: false,
         });
       }),
     );
   }
 
-  function handlePublish(_id: number) {
+  function handlePublish(_id: string) {
     // const newQuestionList = questionList.map((item) => {
     //   if (item._id === _id) {
     //     return {
@@ -109,8 +89,14 @@ const List: FC = () => {
     <>
       <Header title="我的问卷" />
       <div className={styled.content}>
-        {questionList.length > 0 &&
-          questionList.map((item) => {
+        {loading && (
+          <div style={{ textAlign: "center" }}>
+            <Spin />
+          </div>
+        )}
+        {!loading &&
+          questionList?.length > 0 &&
+          questionList?.map((item) => {
             const { _id } = item;
             return (
               <QuestionsCard
@@ -123,6 +109,7 @@ const List: FC = () => {
           })}
         <button onClick={handleAdd}>添加问卷</button>
       </div>
+      <div>{"分页:" + total}</div>
       <div className={styled.footer}>LoadMore... 上滑加载更多</div>
     </>
   );
