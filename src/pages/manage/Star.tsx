@@ -36,8 +36,8 @@ const Star: FC = () => {
           <Empty description={"暂无星标问卷"} />
         ) : (
           list.map((item) => {
-            const { _id, isStart } = item;
-            return isStart && <QuestionsCard key={_id} {...item} />;
+            const { _id, isStar } = item;
+            return isStar && <QuestionsCard key={_id} {...item} />;
           })
         )}
       </div>

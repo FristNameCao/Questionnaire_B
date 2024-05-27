@@ -14,7 +14,7 @@ interface QuestionsCard {
   title: string;
   isPublished: boolean;
   createAt?: string;
-  isStart: boolean;
+  isStar: boolean;
   handleDelete?: (_id: string) => void;
   handlePublish?: (_id: string) => void;
 }
@@ -29,7 +29,7 @@ const QuestionsCard: FC<QuestionsCard> = (props) => {
     handleDelete = () => {},
     // handlePublish,
     createAt,
-    isStart,
+    isStar,
   } = props;
 
   function detele(_id: string) {
@@ -58,7 +58,7 @@ const QuestionsCard: FC<QuestionsCard> = (props) => {
               }
             >
               <Space>
-                {isStart && <StarOutlined style={{ color: "red" }} />}
+                {isStar && <StarOutlined style={{ color: "red" }} />}
                 {title}
               </Space>
             </Link>
@@ -103,7 +103,7 @@ const QuestionsCard: FC<QuestionsCard> = (props) => {
           </div>
           <div>
             <Button type="text" icon={<StarOutlined />} size="small">
-              {isStart ? "取消标星" : "标星"}
+              {isStar ? "取消标星" : "标星"}
             </Button>
             <Popconfirm
               title={"确认复制该问卷？"}

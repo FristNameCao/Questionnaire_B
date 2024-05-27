@@ -52,7 +52,7 @@ const List: FC = () => {
           _id: Date.now().toString(),
           title: "问卷" + Date.now(),
           isPublished: false,
-          isStart: false,
+          isStar: false,
           createAt: "5月20日13:14",
           answerCount: 0,
           isDeleted: false,

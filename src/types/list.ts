@@ -4,7 +4,7 @@ export interface QuestionList {
   answerCount?: number;
   isDeleted?: boolean;
   isPublished: boolean;
-  isStart: boolean;
+  isStar: boolean;
   createAt: string;
   updateTime?: string;
 }
