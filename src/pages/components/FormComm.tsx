@@ -1,14 +1,11 @@
 import { FC } from "react";
 import { Form, Input } from "antd";
+import { RegisterType } from "../../types/user";
 
-type FieldType = {
-  username: string;
-  password: string;
-};
 const FormComm: FC = () => {
   return (
     <div>
-      <Form.Item<FieldType>
+      <Form.Item<RegisterType>
         label="用户名"
         name="username"
         rules={[
@@ -27,18 +24,17 @@ const FormComm: FC = () => {
       >
         <Input allowClear />
       </Form.Item>
-      <Form.Item<FieldType>
+      <Form.Item<RegisterType>
         label="密码"
         name="password"
         rules={[
           { required: true, message: "请输入你的密码!" },
           () => ({
             validator(_, value) {
-              console.log(value);
-              if (value.length < 8) {
+              if (value?.length < 8) {
                 return Promise.reject(new Error("密码至少8位,且少于16位"));
               }
-              if (value.length > 16) {
+              if (value?.length > 16) {
                 return Promise.reject(new Error("密码最多16位"));
               }
               const reg = /^[A-Za-z\d!@#$%^&*]{8,16}$/;

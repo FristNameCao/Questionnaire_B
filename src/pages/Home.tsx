@@ -26,11 +26,11 @@ const Home: FC = () => {
   // );
 
   useEffect(() => {
-    fetch("/api/test")
-      .then((res) => res.json())
-      .then((res) => {
-        console.log(res);
-      });
+    // fetch("/api/test")
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     console.log(res);
+    //   });
     // mock.js 只能劫持 XMLHttpRequest,不能劫持 fetch
     axios.get("/api/question/100").then((res) => {
       console.log(res.data);

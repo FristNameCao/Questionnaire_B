@@ -7,6 +7,7 @@ import { useTitle } from "ahooks";
 // import { getQuestionListService } from "../../services/question";
 // import { QuestionList } from "../../types/list";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
+import ListPage from "../../components/ListPage";
 const Star: FC = () => {
   useTitle("星标问卷");
   // const [questionList, seQuestionList] = useState<QuestionList[]>([]);
@@ -41,7 +42,9 @@ const Star: FC = () => {
           })
         )}
       </div>
-      <div>分页{total}</div>
+      <div className={styled.footer}>
+        <ListPage total={total} />
+      </div>
     </div>
   );
 };
