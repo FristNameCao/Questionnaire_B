@@ -12,13 +12,11 @@ import { RegisterType } from "../types/user";
 import { useRequest } from "ahooks";
 import { loginService } from "../services/user";
 import { setToken } from "../utils/user-token";
-
 const USERNAME_KEY = "username";
 const PASSWORD_KEY = "password";
 const Login: FC = () => {
   const nav = useNavigate();
   const [form] = useForm(); //第三方hook
-
   // 记住账户密码
   function rememberUserFromStorage(username: string, password: string) {
     localStorage.setItem(USERNAME_KEY, username);

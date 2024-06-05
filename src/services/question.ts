@@ -1,12 +1,14 @@
 import { QuestionListData, SearchOption } from "../types/list";
 import axios, { ResDataType } from "./ajax";
 
+// 获取单个问卷详情
 export const getQuestionService = (id: string): Promise<ResDataType> =>
   axios.get(`/api/question/${id}`);
-
+// 创建问卷
 export const createQuestionService = (): Promise<ResDataType> =>
   axios.post("/api/question/");
 
+// 获取问卷列表
 export const getQuestionListService = (
   opt: Partial<SearchOption> = {},
 ): Promise<QuestionListData> => axios.get(`/api/question/`, { params: opt });

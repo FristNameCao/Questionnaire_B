@@ -1,11 +1,15 @@
-import { Layout } from "antd";
+import { Layout, Spin } from "antd";
 import { FC } from "react";
 import { Outlet } from "react-router-dom";
 import styled from "./MainLayout.module.scss";
 import Logo from "../components/Logo";
 import UserInfo from "../components/UserInfo";
+import useLoadUserData from "../hooks/useLoadUserData";
+import useNavPage from "../hooks/useNavPage";
 const MainLayout: FC = () => {
   const { Header, Footer, Content } = Layout;
+  const { waitingUserData } = useLoadUserData();
+  useNavPage(waitingUserData);
   return (
     <Layout>
       <Header className={styled.header}>
@@ -18,7 +22,13 @@ const MainLayout: FC = () => {
       </Header>
       <Layout className={styled.main}>
         <Content>
-          <Outlet />
+          {waitingUserData ? (
+            <div style={{ textAlign: "center", marginTop: "60px" }}>
+              <Spin />
+            </div>
+          ) : (
+            <Outlet />
+          )}
         </Content>
       </Layout>
       <Footer className={styled.footer}>
