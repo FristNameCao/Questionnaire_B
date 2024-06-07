@@ -1,23 +1,27 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice, nanoid } from "@reduxjs/toolkit";
 import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
-import { getNextSelectedId } from "./utils";
-
+import { getNextSelectedId, insterNweComponent } from "./utils";
+import cloneDeep from "lodash.clonedeep";
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
   title: string;
+  isHidden?: boolean;
+  isLocked?: boolean;
   props: ComponentPropsType;
 };
 
 export type ComponentsStateType = {
   selectedId: string;
   compontList: Array<ComponentInfoType>;
+  copiedComponent: ComponentInfoType | null;
 };
 
 const INIT_STATE: ComponentsStateType = {
   selectedId: "",
   compontList: [],
+  copiedComponent: null,
   // 其他扩展
 };
 
@@ -36,6 +40,7 @@ export const componentsSlice = createSlice({
     changeSelectedId: produce(
       // 改变不可变数据的写法
       (draft: ComponentsStateType, action: PayloadAction<string>) => {
+        // 选中哪个就把哪个id传过来
         draft.selectedId = action.payload;
       },
     ),
@@ -47,22 +52,8 @@ export const componentsSlice = createSlice({
       ) => {
         // 新点击left拿到的组件
         const newComponent = action.payload;
-        // 点击main拿到main选中的组件
-        const { selectedId, compontList } = draft;
 
-        // 拿到main选中的组件下标
-        const index = compontList.findIndex(
-          (item) => item.fe_id === selectedId,
-        );
-        if (index < 0) {
-          // main中未选中任何组件，就直接插入main最后面
-          draft.compontList.push(newComponent);
-        } else {
-          // 选中了组件，就插入选中的main后面一个
-          draft.compontList.splice(index + 1, 0, newComponent);
-        }
-        // 插入后，选中新插入的组件
-        draft.selectedId = newComponent.fe_id;
+        insterNweComponent(draft, newComponent);
       },
     ),
     // 修改组件属性
@@ -99,6 +90,65 @@ export const componentsSlice = createSlice({
         draft.compontList.splice(index, 1);
       }
     }),
+    // 隐藏/显示 组件
+    ChangeComponetnHidden: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ fe_id: string; isHidden: boolean }>,
+      ) => {
+        const { fe_id, isHidden } = action.payload;
+        const { compontList = [] } = draft;
+        let newSelectedId = "";
+        //重新计算 selectedId
+        if (isHidden) {
+          // 要隐藏
+          newSelectedId = getNextSelectedId(fe_id, compontList);
+          draft.selectedId = newSelectedId;
+        } else {
+          // 要显示
+          newSelectedId = fe_id;
+        }
+
+        draft.selectedId = newSelectedId;
+
+        const curComp = compontList.find((item) => item.fe_id === fe_id);
+        if (curComp) {
+          curComp.isHidden = isHidden;
+        }
+      },
+    ),
+
+    // 锁定/解锁 组件
+    toggleComponentLocked: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ fe_id: string }>,
+      ) => {
+        const { fe_id } = action.payload;
+        const { compontList = [] } = draft;
+        const curComp = compontList.find((item) => item.fe_id === fe_id);
+        if (curComp) {
+          curComp.isLocked = !curComp.isLocked;
+        }
+      },
+    ),
+    // 复制当前选中的组件
+    copySelectedComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, compontList = [] } = draft;
+      const selectedComponent = compontList.find(
+        (item) => item.fe_id === selectedId,
+      );
+      if (selectedComponent == null) return;
+      draft.copiedComponent = cloneDeep(selectedComponent); // 深拷贝
+    }),
+    // 粘贴组件
+    pasteCopiedComponent: produce((draft: ComponentsStateType) => {
+      const { copiedComponent } = draft;
+      if (copiedComponent == null) return;
+      // 要把fe_id修改了
+      copiedComponent.fe_id = nanoid();
+      insterNweComponent(draft, copiedComponent);
+    }),
   },
 });
 
@@ -108,5 +158,9 @@ export const {
   addComponent,
   changeComponentProps,
   removeSelectedComponent,
+  ChangeComponetnHidden,
+  toggleComponentLocked,
+  copySelectedComponent,
+  pasteCopiedComponent,
 } = componentsSlice.actions;
 export default componentsSlice.reducer;

@@ -38,6 +38,7 @@ function useLoadQuestionData() {
       resetComponents({
         compontList,
         selectedId,
+        copiedComponent: null,
       }),
     );
   }, [data]);

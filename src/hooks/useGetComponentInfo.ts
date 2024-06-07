@@ -6,12 +6,12 @@ function useGetComponentInfo() {
   const components = useSelector<StateType>(
     (state) => state.components,
   ) as ComponentsStateType;
-  const { compontList, selectedId } = components;
+  const { compontList, selectedId, copiedComponent } = components;
 
   // 找到选中的组件
   const selectedComponent = compontList.find((c) => c.fe_id === selectedId);
 
-  return { compontList, selectedId, selectedComponent };
+  return { compontList, selectedId, selectedComponent, copiedComponent };
 }
 
 export default useGetComponentInfo;

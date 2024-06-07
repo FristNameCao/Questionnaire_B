@@ -3,6 +3,7 @@ export type QuestionTitleProprsType = {
   level?: 1 | 2 | 3 | 4 | 5;
   isCenter?: boolean;
   onChange?: (newProps: Partial<QuestionTitleProprsType>) => void;
+  disable?: boolean;
 };
 
 export const QuestionTitleDefaultProps: QuestionTitleProprsType = {

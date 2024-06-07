@@ -15,7 +15,7 @@ const ComponentProp: FC = () => {
   // 拿到选中的返回的组件信息
   const { selectedComponent } = useGetComponentInfo();
   if (selectedComponent == null) return <NoProp />;
-  const { type, props } = selectedComponent;
+  const { type, props, isLocked, isHidden } = selectedComponent;
 
   // 拿到组件的配置信息
   const componentConf = getComponentConfByType(type);
@@ -30,7 +30,13 @@ const ComponentProp: FC = () => {
     dispatch(changeComponentProps({ fe_id, newProps }));
   }
 
-  return <PropComponent {...props} onChange={changeProps} />;
+  return (
+    <PropComponent
+      {...props}
+      onChange={changeProps}
+      disable={isLocked || isHidden}
+    />
+  );
 };
 
 export default ComponentProp;

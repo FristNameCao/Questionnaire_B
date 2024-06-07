@@ -11,6 +11,7 @@ import {
 import { getComponentConfByType } from "../../../components/QuestionComponents";
 import { useDispatch } from "react-redux";
 import classNames from "classnames";
+import useBindCanvasKeyPress from "../../../hooks/useBindCanvasKeyPress";
 
 type EditCanvasPropsType = {
   loading: boolean;
@@ -26,7 +27,7 @@ function getComponent(componentInfo: ComponentInfoType) {
 const EditCanvas: FC<EditCanvasPropsType> = ({ loading }) => {
   const { compontList, selectedId } = useGetComponentInfo();
   const dispatch = useDispatch();
-
+  useBindCanvasKeyPress();
   function handleClick(e: React.MouseEvent<HTMLDivElement>, id: string) {
     e?.stopPropagation(); //组织冒泡
     dispatch(changeSelectedId(id));
@@ -42,23 +43,27 @@ const EditCanvas: FC<EditCanvasPropsType> = ({ loading }) => {
 
   return (
     <div className={styled.canvas}>
-      {compontList.map((item) => {
-        const wrapperDefaultClassName = styled["component-wrapper"];
-        const selectedClassName = styled.selected;
-        const wrapperClassName = classNames({
-          [wrapperDefaultClassName]: true,
-          [selectedClassName]: selectedId === item.fe_id,
-        });
-        return (
-          <div
-            className={wrapperClassName}
-            key={item.fe_id}
-            onClick={(e) => handleClick(e, item.fe_id)}
-          >
-            <div className={styled.component}>{getComponent(item)}</div>
-          </div>
-        );
-      })}
+      {compontList
+        .filter((item) => !item.isHidden)
+        .map((item) => {
+          const wrapperDefaultClassName = styled["component-wrapper"];
+          const selectedClassName = styled.selected;
+          const lockedCLassName = styled.locked;
+          const wrapperClassName = classNames({
+            [wrapperDefaultClassName]: true,
+            [selectedClassName]: selectedId === item.fe_id,
+            [lockedCLassName]: item.isLocked,
+          });
+          return (
+            <div
+              className={wrapperClassName}
+              key={item.fe_id}
+              onClick={(e) => handleClick(e, item.fe_id)}
+            >
+              <div className={styled.component}>{getComponent(item)}</div>
+            </div>
+          );
+        })}
 
       {/* 静态组件 */}
       {/* <div className={styled["component-wrapper"]}>

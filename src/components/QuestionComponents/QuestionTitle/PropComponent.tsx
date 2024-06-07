@@ -6,7 +6,7 @@ import { Checkbox, Form, Input, Select } from "antd";
 const PropsComponent: FC<QuestionTitleProprsType> = (
   props: QuestionTitleProprsType,
 ) => {
-  const { text, level, isCenter, onChange } = props;
+  const { text, level, isCenter, onChange, disable } = props;
 
   const [form] = useForm();
   function handleValuesChange() {
@@ -26,6 +26,7 @@ const PropsComponent: FC<QuestionTitleProprsType> = (
       layout="vertical"
       initialValues={{ text, level, isCenter }}
       form={form}
+      disabled={disable}
     >
       <Form.Item
         label="标题内容"
