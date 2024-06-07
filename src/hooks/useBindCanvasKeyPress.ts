@@ -4,6 +4,8 @@ import {
   copySelectedComponent,
   pasteCopiedComponent,
   removeSelectedComponent,
+  selectNextComponent,
+  selectPrevComponent,
 } from "../store/componentsReducer";
 
 /**
@@ -33,6 +35,18 @@ function useBindCanvasKeyPress() {
   useKeyPress(["ctrl.v", "meta.v"], () => {
     if (!isActiveElementValid()) return;
     dispatch(pasteCopiedComponent());
+  });
+
+  // 选中上一个组件
+  useKeyPress(["uparrow"], () => {
+    if (!isActiveElementValid()) return;
+    dispatch(selectPrevComponent());
+  });
+
+  // 选中下一个组件
+  useKeyPress(["downarrow"], () => {
+    if (!isActiveElementValid()) return;
+    dispatch(selectNextComponent());
   });
 }
 export default useBindCanvasKeyPress;
