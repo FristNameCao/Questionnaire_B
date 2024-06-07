@@ -12,7 +12,7 @@ function useLoadQuestionData() {
   const { run, data, loading, error } = useRequest(
     async (id: string) => {
       if (!id) throw new Error("没有问卷");
-
+      // 拿到后台的默认值展示画布
       const data = await getQuestionService(id);
       return data;
     },
@@ -33,7 +33,7 @@ function useLoadQuestionData() {
     if (compontList.length > 0) {
       selectedId = compontList[0].fe_id;
     }
-
+    // 赋值给前端初始化画布界面
     dispatch(
       resetComponents({
         compontList,

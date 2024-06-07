@@ -25,11 +25,14 @@ function getComponent(componentInfo: ComponentInfoType) {
 }
 
 const EditCanvas: FC<EditCanvasPropsType> = ({ loading }) => {
+  // 后端控制初始化时候edit展示多少画布内容
   const { compontList, selectedId } = useGetComponentInfo();
   const dispatch = useDispatch();
   useBindCanvasKeyPress();
+
+  // 点击画布，选中组件
   function handleClick(e: React.MouseEvent<HTMLDivElement>, id: string) {
-    e?.stopPropagation(); //组织冒泡
+    e?.stopPropagation(); //阻止冒泡
     dispatch(changeSelectedId(id));
   }
 

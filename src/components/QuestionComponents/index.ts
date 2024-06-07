@@ -2,10 +2,16 @@ import { FC } from "react";
 // QuestionInputConf 输入框的配置也就是一个组件和配置都在一起 QuestionInputPropsType 输入框的属性
 import QuestionInputConf, { QuestionInputPropsType } from "./QuestionInput";
 import QuestionTitletConf, { QuestionTitleProprsType } from "./QuestionTitle";
+import QuestionParagraphConf, {
+  QuestionParagraphPropsType,
+} from "./QuesyionParagraph";
+import QuestionInfoConf, { QuestionInfoPropsType } from "./QuestionInfo";
 
 // 组件的属性 proprs type
 export type ComponentPropsType = QuestionInputPropsType &
-  QuestionTitleProprsType;
+  QuestionTitleProprsType &
+  QuestionParagraphPropsType &
+  QuestionInfoPropsType;
 
 // title组件的配置
 export type ComponentConfType = {
@@ -20,6 +26,8 @@ export type ComponentConfType = {
 const componentConfList: ComponentConfType[] = [
   QuestionTitletConf,
   QuestionInputConf,
+  QuestionParagraphConf,
+  QuestionInfoConf,
 ];
 
 // 组件分组
@@ -27,7 +35,7 @@ export const ComponentConfGroup = [
   {
     grounId: "textGroun",
     groupName: "文本显示",
-    components: [QuestionTitletConf],
+    components: [QuestionInfoConf, QuestionTitletConf, QuestionParagraphConf],
   },
   {
     grounId: "inputGroun",

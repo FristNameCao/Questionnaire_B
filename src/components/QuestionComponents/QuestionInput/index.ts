@@ -4,7 +4,7 @@
  */
 // 组件
 import Component from "./Component";
-import PropComponent from "./PropComponet";
+import PropComponent from "./PropComponent";
 // 默认属性
 import { QuestionInputDefaultProps } from "./interface";
 // 类型

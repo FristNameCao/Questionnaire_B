@@ -11,6 +11,8 @@ import EditHeader from "./EditHeader";
 const Edit: FC = () => {
   const { loading } = useLoadQuestionData();
   const dispatch = useDispatch();
+
+  // 清除选中的组件
   function clearSelectedId() {
     dispatch(changeSelectedId(""));
   }

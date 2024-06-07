@@ -63,7 +63,6 @@ export const componentsSlice = createSlice({
         action: PayloadAction<{ fe_id: string; newProps: ComponentPropsType }>,
       ) => {
         const { fe_id, newProps } = action.payload;
-
         // 当前要修改属性的这个组件
         const curComp = draft.compontList.find((item) => item.fe_id === fe_id);
         if (curComp) {
