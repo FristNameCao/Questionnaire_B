@@ -12,8 +12,13 @@ import { nanoid } from "@reduxjs/toolkit";
 const { Title } = Typography;
 const Lib: FC = () => {
   const dispatch = useDispatch();
+  // 生成组件
   function genComponent(c: ComponentConfType) {
+    // 获取组件配置 QuestionComponents里面的组件配置
+    // Component 代表一个组件，defaultProps 代表组件的默认属性
+    // type 代表组件类型，title 代表组件标题
     const { type, Component, title, defaultProps } = c;
+    // 点击组件时候利用redux dispatch给画布新增组件
     function handleClick() {
       dispatch(
         addComponent({
@@ -35,7 +40,9 @@ const Lib: FC = () => {
   }
   return (
     <div>
+      {/* 左侧组件列表 */}
       {ComponentConfGroup.map((group, index) => {
+        // 分组 components 组件列表
         const { grounId, groupName, components } = group;
         return (
           <div key={grounId}>
@@ -45,6 +52,7 @@ const Lib: FC = () => {
             >
               {groupName}
             </Title>
+            {/*  组件列表 */}
             <div>{components.map((c) => genComponent(c))}</div>
           </div>
         );

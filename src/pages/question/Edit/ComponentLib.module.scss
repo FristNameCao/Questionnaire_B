@@ -1,12 +1,12 @@
 .wrapper {
   margin-bottom: 12px;
   cursor: pointer;
-  background-color: #ffff;
+  background-color: #f7f7f7;
   border-color: #ffff;
   padding: 12px;
   border-radius: 3px;
   &:hover {
-    border-color: #d9d9d9;
+    background-color: #d9d9d9;
   }
 }
 .component {

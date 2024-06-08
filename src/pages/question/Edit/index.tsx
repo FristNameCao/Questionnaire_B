@@ -29,9 +29,7 @@ const Edit: FC = () => {
           </div>
           <div className={styled.main} onClick={clearSelectedId}>
             <div className={styled["canvas-wrapper"]}>
-              <div>
-                <EditCanvas loading={loading} />
-              </div>
+              <EditCanvas loading={loading} />
             </div>
           </div>
           <div className={styled.right}>
