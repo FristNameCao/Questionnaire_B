@@ -7,6 +7,7 @@ import {
   selectNextComponent,
   selectPrevComponent,
 } from "../store/componentsReducer";
+import { ActionCreators as UnActionCreator } from "redux-undo";
 
 /**
  *
@@ -53,5 +54,29 @@ function useBindCanvasKeyPress() {
     if (!isActiveElementValid()) return;
     dispatch(selectNextComponent());
   });
+
+  // 撤销
+  useKeyPress(
+    ["ctrl.z", "meta.z"],
+    () => {
+      if (!isActiveElementValid()) return;
+      dispatch(UnActionCreator.undo());
+    },
+    {
+      exactMatch: true, // 严格匹配
+    },
+  );
+
+  // 重做
+  useKeyPress(
+    ["ctrl.shift.z", "meta.shift.z"],
+    () => {
+      if (!isActiveElementValid()) return;
+      dispatch(UnActionCreator.redo());
+    },
+    {
+      exactMatch: true, // 严格匹配
+    },
+  );
 }
 export default useBindCanvasKeyPress;
