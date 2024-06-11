@@ -14,8 +14,13 @@ import {
  */
 function isActiveElementValid() {
   const activeEm = document.activeElement;
-  if (activeEm == document.body) return true; // 光标没有focus在输入框上
-  return false;
+
+  // 没有增加dnd-kit 之前
+  // if (activeEm == document.body) return true; // 光标没有focus在输入框上
+
+  //增加了dnd-kit以后
+  if (activeEm == document.body) return true;
+  if (activeEm?.matches("div[role='button']")) return true;
 }
 function useBindCanvasKeyPress() {
   const dispatch = useDispatch();

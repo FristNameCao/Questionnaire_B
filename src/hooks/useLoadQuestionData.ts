@@ -4,6 +4,7 @@ import { getQuestionService } from "../services/question";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { resetComponents } from "../store/componentsReducer";
+import { resetPageInfo } from "../store/pageInfoReducer";
 
 function useLoadQuestionData() {
   const { id = "" } = useParams();
@@ -26,14 +27,20 @@ function useLoadQuestionData() {
     if (!data) {
       return;
     }
-    const { title = "", compontList = [] } = data;
+    const {
+      title = "",
+      desc = "",
+      js = '"',
+      css = "",
+      compontList = [],
+    } = data;
     console.log("title", title);
     let selectedId = "";
 
     if (compontList.length > 0) {
       selectedId = compontList[0].fe_id;
     }
-    // 赋值给前端初始化画布界面
+    // 赋值给前端组件，初始化画布界面，就是把componentList赋值给Redux store中
     dispatch(
       resetComponents({
         compontList,
@@ -41,6 +48,8 @@ function useLoadQuestionData() {
         copiedComponent: null,
       }),
     );
+    // 把pageInfo赋值给Redux store
+    dispatch(resetPageInfo({ title, desc, js, css }));
   }, [data]);
 
   // 根据id变化，执行ajax

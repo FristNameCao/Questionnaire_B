@@ -2,8 +2,10 @@ import {
   BlockOutlined,
   CopyOutlined,
   DeleteOutlined,
+  DownOutlined,
   EyeInvisibleOutlined,
   LockOutlined,
+  UpOutlined,
 } from "@ant-design/icons";
 import { Button, Space, Tooltip } from "antd";
 import { FC } from "react";
@@ -11,6 +13,7 @@ import { useDispatch } from "react-redux";
 import {
   ChangeComponetnHidden,
   copySelectedComponent,
+  moveComponent,
   pasteCopiedComponent,
   removeSelectedComponent,
   toggleComponentLocked,
@@ -19,10 +22,13 @@ import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 
 const EditToolbar: FC = () => {
   const dispatch = useDispatch();
-  const { selectedId, selectedComponent, copiedComponent } =
+  const { selectedId, selectedComponent, copiedComponent, compontList } =
     useGetComponentInfo();
   const { isLocked } = selectedComponent || {};
-
+  const length = compontList.length;
+  const selectedIndex = compontList.findIndex((c) => c.fe_id === selectedId);
+  const isFirst = selectedIndex <= 0; // 第一个
+  const isLast = selectedIndex + 1 >= length; // 最后一个
   // 删除
   function handleDelete() {
     dispatch(removeSelectedComponent());
@@ -48,6 +54,20 @@ const EditToolbar: FC = () => {
     if (copiedComponent) {
       dispatch(pasteCopiedComponent());
     }
+  }
+
+  // 上移
+  function moveUp() {
+    dispatch(
+      moveComponent({ oldIndex: selectedIndex, newIndex: selectedIndex - 1 }),
+    );
+  }
+
+  // 下移
+  function moveDown() {
+    dispatch(
+      moveComponent({ oldIndex: selectedIndex, newIndex: selectedIndex + 1 }),
+    );
   }
 
   return (
@@ -89,6 +109,24 @@ const EditToolbar: FC = () => {
           icon={<BlockOutlined />}
           disabled={!copiedComponent}
           onClick={handlePaste}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="上移">
+        <Button
+          shape="circle"
+          type={isLocked ? "primary" : "default"}
+          icon={<UpOutlined />}
+          disabled={isFirst}
+          onClick={moveUp}
+        ></Button>
+      </Tooltip>
+      <Tooltip title="下移">
+        <Button
+          shape="circle"
+          type={isLocked ? "primary" : "default"}
+          icon={<DownOutlined />}
+          disabled={isLast}
+          onClick={moveDown}
         ></Button>
       </Tooltip>
     </Space>

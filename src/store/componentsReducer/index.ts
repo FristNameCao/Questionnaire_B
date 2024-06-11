@@ -3,6 +3,7 @@ import { ComponentPropsType } from "../../components/QuestionComponents";
 import { produce } from "immer";
 import { getNextSelectedId, insterNweComponent } from "./utils";
 import cloneDeep from "lodash.clonedeep";
+import { arrayMove } from "@dnd-kit/sortable";
 export type ComponentInfoType = {
   fe_id: string;
   type: string;
@@ -169,6 +170,34 @@ export const componentsSlice = createSlice({
       if (selectedIndex + 1 === compontList.length) return; //已经选中了最后一个组件，无法往下选中
       draft.selectedId = compontList[selectedIndex + 1].fe_id;
     }),
+    // 修改组件标题
+    changeComponentTitle: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ fe_id: string; title: string }>,
+      ) => {
+        const { fe_id, title } = action.payload;
+        const curComp = draft.compontList.find((item) => item.fe_id === fe_id);
+        if (curComp) {
+          curComp.title = title;
+        }
+      },
+    ),
+
+    // 移动组件位置
+    moveComponent: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{
+          oldIndex: number;
+          newIndex: number;
+        }>,
+      ) => {
+        const { compontList: CurCompoinentList } = draft;
+        const { oldIndex, newIndex } = action.payload;
+        draft.compontList = arrayMove(CurCompoinentList, oldIndex, newIndex);
+      },
+    ),
   },
 });
 
@@ -184,5 +213,7 @@ export const {
   pasteCopiedComponent,
   selectPrevComponent,
   selectNextComponent,
+  changeComponentTitle,
+  moveComponent,
 } = componentsSlice.actions;
 export default componentsSlice.reducer;
