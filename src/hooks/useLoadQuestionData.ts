@@ -32,6 +32,7 @@ function useLoadQuestionData() {
       desc = "",
       js = '"',
       css = "",
+      isPublished = false,
       compontList = [],
     } = data;
     console.log("title", title);
@@ -49,7 +50,7 @@ function useLoadQuestionData() {
       }),
     );
     // 把pageInfo赋值给Redux store
-    dispatch(resetPageInfo({ title, desc, js, css }));
+    dispatch(resetPageInfo({ title, desc, js, css, isPublished }));
   }, [data]);
 
   // 根据id变化，执行ajax
