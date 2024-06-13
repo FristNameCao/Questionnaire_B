@@ -4,11 +4,12 @@ import QuestionsCard from "../../components/QuestionsCard";
 import { useDebounceFn, useRequest, useTitle } from "ahooks";
 import styled from "./common.module.scss";
 import Header from "./components/Header";
-import { Empty, Spin } from "antd";
+import { Empty } from "antd";
 import { useSearchParams } from "react-router-dom";
 import { getQuestionListService } from "../../services/question";
 import { LIST_PAGE_SIZE_DEFAULT, LIST_SEARCH_PARAM_KEY } from "../../constant";
 import { QuestionList } from "../../types/list";
+import LoadingElem from "../../components/Loading";
 const List: FC = () => {
   useTitle("我的问卷");
   // const [questionList, seQuestionList] = useState<QuestionList[]>([]);
@@ -77,11 +78,12 @@ const List: FC = () => {
 
   // 当页面滚动时候加载，或者url参数（keyword）变化时，触发加载数据
   useEffect(() => {
+    const ListScorll = document.getElementById("ListScorll");
     if (haveMoreData) {
-      window.addEventListener("scroll", tryLoadMore); //防抖
+      if (ListScorll) ListScorll.addEventListener("scroll", tryLoadMore); //防抖
     }
     return () => {
-      window.removeEventListener("scroll", tryLoadMore); // 解绑事件
+      if (ListScorll) ListScorll.removeEventListener("scroll", tryLoadMore); // 解绑事件
     };
   }, [haveMoreData]);
 
@@ -159,26 +161,25 @@ const List: FC = () => {
   // }
 
   const loadMoreContentElem = () => {
-    if (!started || loading) return <Spin />;
+    if (!started || loading) return <LoadingElem />;
     if (total === 0) return <Empty description="暂无数据" />;
     if (haveMoreData) return <div>LoadMore... 上滑加载更多</div>;
     return <span>开始加载下一页</span>;
   };
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Header title="我的问卷" />
-      <div className={styled.content}>
+      <div className={styled.content} id="ListScorll">
         {list?.length > 0 &&
           list?.map((item) => {
             const { _id } = item;
             return <QuestionsCard key={_id} {...item} />;
           })}
+        <div className={styled.footer} ref={ref}></div>
       </div>
-      <div className={styled.footer} ref={ref}>
-        {loadMoreContentElem()}
-      </div>
-    </>
+      <div className={styled.footer}>{loadMoreContentElem()}</div>
+    </div>
   );
 };
 export default List;

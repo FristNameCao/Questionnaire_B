@@ -10,6 +10,7 @@
 }
 
 .right {
+  max-height: calc(100vh - 88px - 89px);
   flex: 1;
   margin-left: 60px;
 }

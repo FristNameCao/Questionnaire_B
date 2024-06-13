@@ -228,6 +228,7 @@ const Trash: FC = () => {
             setSelectedRowKeys(selectedRowKeys as string[]);
           },
         }}
+        scroll={{ y: 500 }}
       />
     </>
   );

@@ -10,3 +10,4 @@ export const LIST_PAGE_SIZE_PARAM_KEY = "pageSize";
 export const LIST_PAGE_SIZE_DEFAULT = 10;
 export const LIST_PAGE_DEFAULT = 1;
 export const LIST_PAGE_SIZE_OPTIONS = [10, 20, 30, 40, 50];
+export const STAT_PAGE_SIZ = 10; // 统计页面每页显示条数

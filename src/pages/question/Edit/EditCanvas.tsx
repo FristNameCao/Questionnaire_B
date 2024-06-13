@@ -2,7 +2,6 @@ import { FC } from "react";
 import styled from "./EditCanvas.module.scss";
 // import QuestionInput from "../../../components/QuestionComponents/QuestionInput/Component";
 // import QuestionTitle from "../../../components/QuestionComponents/QuestionTitle/Component";
-import { Spin } from "antd";
 import useGetComponentInfo from "../../../hooks/useGetComponentInfo";
 import {
   ComponentInfoType,
@@ -15,6 +14,7 @@ import classNames from "classnames";
 import useBindCanvasKeyPress from "../../../hooks/useBindCanvasKeyPress";
 import SortableContainer from "../../../components/DragSortable/SortableContainer";
 import SortableItem from "../../../components/DragSortable/SortableItem";
+import LoadingElem from "../../../components/Loading";
 
 type EditCanvasPropsType = {
   loading: boolean;
@@ -40,11 +40,7 @@ const EditCanvas: FC<EditCanvasPropsType> = ({ loading }) => {
   }
 
   if (loading) {
-    return (
-      <div style={{ textAlign: "center", marginTop: "24px" }}>
-        <Spin />
-      </div>
-    );
+    return <LoadingElem />;
   }
 
   // SortableContainer 组件的 items属性。需要每一个item都有id

@@ -1,13 +1,14 @@
 import { FC } from "react";
 import Header from "./components/Header";
 import styled from "./common.module.scss";
-import { Empty, Spin } from "antd";
+import { Empty } from "antd";
 import QuestionsCard from "../../components/QuestionsCard";
 import { useTitle } from "ahooks";
 // import { getQuestionListService } from "../../services/question";
 // import { QuestionList } from "../../types/list";
 import useLoadQuestionListData from "../../hooks/useLoadQuestionListData";
 import ListPage from "../../components/ListPage";
+import LoadingElem from "../../components/Loading";
 const Star: FC = () => {
   useTitle("星标问卷");
   // const [questionList, seQuestionList] = useState<QuestionList[]>([]);
@@ -25,14 +26,13 @@ const Star: FC = () => {
 
   const { list = [], total = 0 } = data || {};
   return (
-    <div>
+    <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
       <Header title="星标问卷" />
-      <div className={styled.content}>
-        {loading && (
-          <div style={{ textAlign: "center" }}>
-            <Spin />
-          </div>
-        )}
+      <div
+        className={styled.content}
+        style={{ maxHeight: "calc(100vh - 152px - 158px)" }}
+      >
+        {loading && <LoadingElem />}
         {!loading && list.length === 0 ? (
           <Empty description={"暂无星标问卷"} />
         ) : (

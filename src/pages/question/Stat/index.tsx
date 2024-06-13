@@ -1,26 +1,28 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import useLoadQuestionData from "../../../hooks/useLoadQuestionData";
-import { Button, Result, Spin } from "antd";
+import { Button, Result } from "antd";
 import useGetPageInfo from "../../../hooks/useGetPageInfo";
 import { useNavigate } from "react-router-dom";
 import { useTitle } from "ahooks";
 import styled from "./index.module.scss";
 import StatHeader from "./StatHeader";
+import ComponentList from "./ComponentList";
+import PageStat from "./PageStat";
+import LoadingElem from "../../../components/Loading";
 
 const Stat: FC = () => {
   const { loading } = useLoadQuestionData();
   const { isPublished, title } = useGetPageInfo();
   const nav = useNavigate();
 
+  // 状态提升 selectedId type
+
+  const [selectedComponentId, setSelectedComponentId] = useState("");
+  const [selectedComponentType, setSelectedComponentType] = useState("");
+  console.log("selectedComponentType", selectedComponentType);
+
   // 修改标题
   useTitle(`问卷统计-${title}`);
-
-  // loading 效果
-  const LoadingElem = (
-    <div style={{ textAlign: "center", marginTop: "60px" }}>
-      <Spin />
-    </div>
-  );
 
   // content Element
   function genConentElement() {
@@ -43,8 +45,20 @@ const Stat: FC = () => {
 
     return (
       <>
-        <div className={styled.left}>左侧</div>
-        <div className={styled.main}>中</div>
+        <div className={styled.left}>
+          <ComponentList
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
+        <div className={styled.main}>
+          <PageStat
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
         <div className={styled.right}>右侧</div>
       </>
     );
@@ -56,10 +70,8 @@ const Stat: FC = () => {
         <StatHeader />
       </div>
       <div className={styled["content-wrapper"]}>
-        <div className={styled.content}>
-          {loading && LoadingElem}
-          {!loading && genConentElement()}
-        </div>
+        {loading && <LoadingElem />}
+        <div className={styled.content}>{!loading && genConentElement()}</div>
       </div>
     </div>
   );
