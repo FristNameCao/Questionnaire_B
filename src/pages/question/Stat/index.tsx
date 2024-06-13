@@ -9,6 +9,7 @@ import StatHeader from "./StatHeader";
 import ComponentList from "./ComponentList";
 import PageStat from "./PageStat";
 import LoadingElem from "../../../components/Loading";
+import ChartStat from "./ChartStat";
 
 const Stat: FC = () => {
   const { loading } = useLoadQuestionData();
@@ -19,7 +20,6 @@ const Stat: FC = () => {
 
   const [selectedComponentId, setSelectedComponentId] = useState("");
   const [selectedComponentType, setSelectedComponentType] = useState("");
-  console.log("selectedComponentType", selectedComponentType);
 
   // 修改标题
   useTitle(`问卷统计-${title}`);
@@ -59,7 +59,12 @@ const Stat: FC = () => {
             setSelectedComponentType={setSelectedComponentType}
           />
         </div>
-        <div className={styled.right}>右侧</div>
+        <div className={styled.right}>
+          <ChartStat
+            selectedComponentId={selectedComponentId}
+            selectedComponentType={selectedComponentType}
+          />
+        </div>
       </>
     );
   }

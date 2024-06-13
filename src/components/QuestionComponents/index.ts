@@ -9,9 +9,13 @@ import QuestionInfoConf, { QuestionInfoPropsType } from "./QuestionInfo";
 import QuestionTextareaConf, {
   QuestionTextareaPropsType,
 } from "./QuestionTextarea";
-import QuestionRadionConf, { QuestionRadionPropsType } from "./QuestionRadio";
+import QuestionRadionConf, {
+  QuestionRadionPropsType,
+  QuestionRadioStatPropsType,
+} from "./QuestionRadio";
 import QuestionCheckboxConf, {
   QuestionCheckboxPropsType,
+  QuestionCheckboxStatPropsType,
 } from "./QuestionCheckbox";
 // 组件的属性 proprs type
 export type ComponentPropsType = QuestionInputPropsType &
@@ -22,6 +26,10 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionRadionPropsType &
   QuestionCheckboxPropsType;
 
+// 各个组件统计属性类型
+type QuestionStatPropsType = QuestionRadioStatPropsType &
+  QuestionCheckboxStatPropsType;
+
 // title组件的配置
 export type ComponentConfType = {
   type: string;
@@ -29,6 +37,7 @@ export type ComponentConfType = {
   Component: FC<ComponentPropsType>;
   PropComponent: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
+  StatComponent?: FC<QuestionStatPropsType>;
 };
 
 // 全部组件的配置

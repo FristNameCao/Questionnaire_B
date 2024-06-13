@@ -29,7 +29,7 @@ const PageStat: FC<PropsType> = (props: PropsType) => {
 
   const { loading } = useRequest(
     async () => {
-      const res = getQuestionStatService(id, {
+      const res = await getQuestionStatService(id, {
         page,
         pageSize,
       });
