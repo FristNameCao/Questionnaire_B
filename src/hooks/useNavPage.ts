@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useGetUserInfo from "./useGetUserInfo";
 import { useEffect } from "react";
 import {
-  LOGIN_PATHNAME,
   MANAGE_INDEX_PATHNAME,
   isLoginOrRegisterPage,
   isNoNeedUserInfoPage,
@@ -25,7 +24,7 @@ function useNavPage(waitingUserData: boolean) {
 
     // 未登录
     if (isNoNeedUserInfoPage(pathname)) {
-      nav(LOGIN_PATHNAME);
+      nav("/");
     }
   }, [waitingUserData, username, pathname]);
 
