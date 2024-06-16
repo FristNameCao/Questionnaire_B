@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import {
   ComponentConfGroup,
   ComponentConfType,
@@ -18,8 +18,11 @@ const Lib: FC = () => {
     // Component 代表一个组件，defaultProps 代表组件的默认属性
     // type 代表组件类型，title 代表组件标题
     const { type, Component, title, defaultProps } = c;
+
     // 点击组件时候利用redux dispatch给画布新增组件
-    function handleClick() {
+    // 使用useCallback 避免每次点击组件都重新生成函数
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const handleClick = useCallback(() => {
       dispatch(
         addComponent({
           fe_id: nanoid(5),
@@ -28,7 +31,18 @@ const Lib: FC = () => {
           props: defaultProps,
         }),
       );
-    }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    // function handleClick() {
+    //   dispatch(
+    //     addComponent({
+    //       fe_id: nanoid(5),
+    //       type,
+    //       title,
+    //       props: defaultProps,
+    //     }),
+    //   );
+    // }
 
     return (
       <div key={type} className={styled.wrapper} onClick={handleClick}>
