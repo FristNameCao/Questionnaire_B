@@ -1,4 +1,4 @@
-import { FC, useRef } from "react";
+import { FC, useMemo, useRef } from "react";
 import styled from "./StatHeader.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -31,11 +31,44 @@ const StatHeader: FC = () => {
     message.success("拷贝成功");
   }
 
-  function genLinkAndQRCodeElem() {
-    if (!isPublished) return;
+  // function genLinkAndQRCodeElem() {
+  //   if (!isPublished) return;
+  //   // 拼接url，需要参考c端的规则
+  //   // const url = `http://localhost:3000/question/stat/${id}`;
+  //   const url = `${window.location.origin}/question/stat/${id}`;
+
+  //   // 定义二维码组件
+  //   const QRCcodeElem = (
+  //     <div style={{ textAlign: "center" }}>
+  //       {/* 二维码组件 npm i qrcode.react  */}
+  //       <QRCode value={url} size={150} />
+  //     </div>
+  //   );
+
+  //   return (
+  //     <Space>
+  //       <Input value={url} style={{ width: 300 }} ref={urlInputRef} />
+  //       <Tooltip title="拷贝链接">
+  //         <Button onClick={copy} icon={<CopyOutlined />}>
+  //           复制
+  //         </Button>
+  //       </Tooltip>
+  //       <Popover content={QRCcodeElem}>
+  //         <Button type="primary" icon={<QrcodeOutlined />}>
+  //           {"生成二维码"}
+  //         </Button>
+  //       </Popover>
+  //     </Space>
+  //   );
+  // }
+
+  // 富文本编辑器， excel，ppt工具这些性能大可以考虑用useMemo，因为useMemo可以缓存减少反复执行，可以提升性能
+  // 使用useMemo 缓存生成二维码，如果依赖性经常变化就没必要使用useMemo，因为这样会影响性能
+  const genLinkAndQRCodeElem = useMemo(() => {
+    if (!isPublished) return null;
     // 拼接url，需要参考c端的规则
-    // const url = `http://localhost:3000/question/stat/${id}`;
-    const url = `${window.location.origin}/question/stat/${id}`;
+    const url = `http://localhost:3000/question/stat/${id}`;
+    // const url = `${window.location.origin}/question/stat/${id}`;
 
     // 定义二维码组件
     const QRCcodeElem = (
@@ -60,7 +93,8 @@ const StatHeader: FC = () => {
         </Popover>
       </Space>
     );
-  }
+  }, [isPublished, id]);
+
   return (
     <div className={styled["header-wrapper"]}>
       <div className={styled.header}>
@@ -72,7 +106,7 @@ const StatHeader: FC = () => {
             <Title>{title}</Title>
           </Space>
         </div>
-        <div className={styled.main}>{genLinkAndQRCodeElem()}</div>
+        <div className={styled.main}>{genLinkAndQRCodeElem}</div>
         <div className={styled.right}>
           <Button type="primary" onClick={() => nav(`/question/edit/${id}`)}>
             {"编辑"}
