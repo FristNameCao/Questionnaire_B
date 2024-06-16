@@ -41,7 +41,7 @@
   "scripts": {
     "start": "craco  start",
     "build": "craco  build",
-    "test": "craco  test",
+    "test": "craco  test --watchAll=false",
     "eject": "react-scripts eject",
     "lint": " eslint \"src/**/*.+(js|ts|jsx|tsx)\" ",
     "format": "prettier --write 'src/**/*.{js,ts,jsx,tsx}'",
