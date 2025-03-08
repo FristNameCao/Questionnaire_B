@@ -1,0 +1,35 @@
+.header {
+  display: flex;
+  margin-bottom: 20px;
+  .left {
+    flex: 1;
+  }
+  .right {
+    flex: 1;
+    text-align: right;
+  }
+}
+
+.content {
+  margin-bottom: 20px;
+  flex: 1;
+  overflow: auto;
+  &:hover::-webkit-scrollbar {
+    width: 5px; /* 悬停时设置滚动条宽度 */
+  }
+
+  &:hover::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5); /* 滚动条颜色 */
+    border-radius: 4px; /* 滚动条圆角 */
+  }
+
+  /* 滚动条样式 */
+  &::-webkit-scrollbar {
+    width: 5px; /* 使滚动条宽度为0来隐藏它 */
+    background-color: #ffff;
+  }
+}
+
+.footer {
+  text-align: center;
+}

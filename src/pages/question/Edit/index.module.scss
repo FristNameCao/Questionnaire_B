@@ -1,0 +1,61 @@
+.container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #f0f2f5;
+}
+
+.content-wrapper {
+  flex: auto;
+  padding: 12px 0; // 上下间距
+}
+
+.content {
+  height: 100%;
+  display: flex;
+  margin: 0 24px;
+
+  .main {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+
+    .canvas-wrapper {
+      position: absolute;
+      content: "";
+      top: 50%;
+      left: 50%;
+      width: 400px + 4px;
+      height: 712px;
+      transform: translate(-50%, -50%);
+      overflow: auto;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+      &:hover::-webkit-scrollbar {
+        width: 1px; /* 悬停时设置滚动条宽度 */
+      }
+
+      &:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.5); /* 滚动条颜色 */
+        border-radius: 4px; /* 滚动条圆角 */
+      }
+
+      /* 滚动条样式 */
+      &::-webkit-scrollbar {
+        width: 1px; /* 使滚动条宽度为0来隐藏它 */
+        background-color: #ffff;
+      }
+    }
+  }
+
+  .left {
+    background-color: #ffff;
+    width: 295px;
+    padding: 0 12px; // 上下间距
+  }
+  .right {
+    background-color: #ffff;
+    width: 300px;
+    padding: 0 12px; // 上下间距
+  }
+}

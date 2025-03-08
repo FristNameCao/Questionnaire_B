@@ -1,22 +1,28 @@
-import logo from "./logo.svg";
 import "./App.css";
-
+// import List1 from "./view/list1";
+// import Demo from "./view/UseRefDemo";
+// import Memo from "./view/UseMemo";
+// import Mouse from "./hooks/useMouse";
+// import useGetInfo from "./hooks/useGetInfo";
+// import StyledComponentsDemo from "./components/StyledComponentsDemo";
+import { RouterProvider } from "react-router-dom";
+import router from "./router";
+import "antd/dist/reset.css";
 function App() {
+  // const { x, y } = Mouse();
+  // const { info, loading } = useGetInfo();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello World!</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <RouterProvider router={router}></RouterProvider>
+    // <div className="App">
+    //   {/* <List1 />是否擦地方
+    //    */}
+    //   {/* <Demo /> */}
+    //   {/* <Memo /> */}
+    //   {/* <div>x:{x}</div>
+    //   <div>y:{y}</div> */}
+    //   {/* <div>{loading ? info : "加载中"}</div> */}
+    //   <StyledComponentsDemo />
+    // </div>
   );
 }
 

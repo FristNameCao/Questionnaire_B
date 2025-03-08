@@ -1,46 +1,46 @@
-# Getting Started with Create React App
+# 创建 React 应用入门指南
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+这个项目是使用 [Create React App](https://github.com/facebook/create-react-app) 引导创建的。
 
-## Available Scripts
+## 可用脚本
 
-In the project directory, you can run:
+在项目目录中，你可以运行以下命令：
 
 ### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+在开发模式下运行应用。\
+打开 [http://localhost:3000](http://localhost:3000) 在浏览器中查看。
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+如果你做了修改，页面会重新加载。\
+你还会在控制台中看到任何的 lint 错误。
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+以交互式监视模式启动测试运行器。\
+有关更多信息，请参阅 [运行测试](https://facebook.github.io/create-react-app/docs/running-tests) 章节。
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+为生产环境构建应用，将文件放入 `build` 文件夹。\
+它在生产模式下正确地捆绑了 React，并优化了构建以获得最佳性能。
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+构建被压缩，并且文件名包含哈希值。\
+你的应用已准备好进行部署！
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+有关更多信息，请参阅 [部署](https://facebook.github.io/create-react-app/docs/deployment) 章节。
 
 ### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+**注意：这是一项不可逆的操作。一旦你 `eject`，就无法回头了！**
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+如果你对构建工具和配置选择不满意，你可以随时 `eject`。此命令将从你的项目中移除单个构建依赖。
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+相反，它会将所有配置文件和可传递依赖项（webpack、Babel、ESLint 等）直接复制到你的项目中，因此你可以完全控制它们。除了 `eject` 之外的所有命令仍然有效，但它们将指向复制的脚本，因此你可以调整它们。在这一点上，你就独自承担责任了。
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+你永远不必使用 `eject`。精心策划的功能集适合小型和中型部署，你不应该感到有义务使用此功能。但是，我们理解如果你准备自定义它时，这个工具将非常有用。
 
-## Learn More
+## 了解更多
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+你可以在 [Create React App 文档](https://facebook.github.io/create-react-app/docs/getting-started) 中了解更多信息。
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+要学习 React，请查看 [React 文档](https://reactjs.org/)。
